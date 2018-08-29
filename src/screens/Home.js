@@ -3,7 +3,14 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, Button, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Text,
+  View
+} from "react-native";
 import styled from "styled-components/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -27,19 +34,21 @@ const user = {
 
 type Props = {};
 export default class HomeScreen extends Component<Props> {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: "Home",
     headerRight: (
-      <Button
-        onPress={() => alert("This is a button!")}
-        title="Info"
-        color="#fff"
-      />
+      <TouchableOpacity
+        onPress={() => navigation.push("Details", user)}
+        style={{ marginRight: 20 }}
+      >
+        <Icon name="user" size={20} color="#fff" />
+      </TouchableOpacity>
     )
-  };
+  });
+
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <ProfileTop navigation={this.props.navigation} user={user} />
         <View style={styles.introContainer}>
           <Text style={styles.introText}>{user.description}</Text>
@@ -48,7 +57,7 @@ export default class HomeScreen extends Component<Props> {
         <LineGraphStats />
         <Divider />
         <ProgressCircleStats />
-      </View>
+      </ScrollView>
     );
   }
 }
