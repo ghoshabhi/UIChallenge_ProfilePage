@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const LocationPin = () => (
   <Icon name="location-arrow" size={15} color="#22222280" />
 );
 
-const Profile = () => (
+const Profile = ({ navigation, user }) => (
   <View style={styles.profileContainer}>
     <View style={styles.imageContainer}>
       <Image
@@ -15,16 +15,16 @@ const Profile = () => (
           width: 140,
           borderRadius: 5
         }}
-        source={{
-          uri: "https://api.adorable.io/avatars/285/abott@adorable.png"
-        }}
+        source={user.profilePicture}
         resizeMethod="resize"
       />
     </View>
     <View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoHeader}>Joseph Idalo</Text>
-        <Text style={styles.infoSubHeader}>Product Designer</Text>
+        <TouchableOpacity onPress={() => navigation.push("Details", user)}>
+          <Text style={styles.infoHeader}>{user.name}</Text>
+        </TouchableOpacity>
+        <Text style={styles.infoSubHeader}>{user.title}</Text>
         <View
           style={[
             styles.locationContainer,
@@ -33,7 +33,7 @@ const Profile = () => (
         >
           <LocationPin />
           <Text style={[styles.locationText, { marginLeft: 5 }]}>
-            {"London"}
+            {user.location}
           </Text>
         </View>
       </View>
@@ -64,31 +64,29 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     position: "relative",
     shadowColor: "#ddd",
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 0, height: 20 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    elevation: 1,
-    flex: 1
+    elevation: 1
+    // flex: 1
   },
   infoContainer: {
     alignItems: "flex-end",
     height: 100,
-    paddingRight: 20,
+    paddingRight: 10,
     flex: 0.5
   },
   infoHeader: {
     fontSize: 22,
     fontWeight: "700"
-    // letterSpacing: 1.2
   },
   infoSubHeader: {
-    margin: 5,
+    marginTop: 5,
     fontSize: 14
   },
   divider: {
     height: 1,
     marginTop: 20,
-    marginHorizontal: 15,
     backgroundColor: "#dddddd80"
   },
   locationContainer: {
@@ -104,7 +102,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     margin: 10
-    // borderWidth: 1
   },
   stats: {
     alignItems: "center",

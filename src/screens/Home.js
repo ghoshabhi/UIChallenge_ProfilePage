@@ -3,11 +3,11 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Button, Text, View } from "react-native";
 import styled from "styled-components/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import Profile from "../components/Profile";
+import ProfileTop from "../components/Profile";
 import LineGraphStats from "../components/LineGraphStats";
 import ProgressCircleStats from "../components/ProgressCircleStats";
 
@@ -16,17 +16,33 @@ export const Divider = styled.View`
   background-color: #dddddd90;
 `;
 
+const user = {
+  name: "Abhishek Ghosh",
+  title: "Software Engineer",
+  description:
+    "Passionate Full Stack Engineer focussing on cutting edge frontend and scalable backend technologies!",
+  location: "Hayward, CA",
+  profilePicture: require("../assets/pp.png")
+};
+
 type Props = {};
 export default class HomeScreen extends Component<Props> {
+  static navigationOptions = {
+    title: "Home",
+    headerRight: (
+      <Button
+        onPress={() => alert("This is a button!")}
+        title="Info"
+        color="#fff"
+      />
+    )
+  };
   render() {
     return (
       <View style={styles.container}>
-        <Profile />
+        <ProfileTop navigation={this.props.navigation} user={user} />
         <View style={styles.introContainer}>
-          <Text style={styles.introText}>
-            Product Designer of Norde Team, based in London with great love for
-            Designing!
-          </Text>
+          <Text style={styles.introText}>{user.description}</Text>
         </View>
         <Divider />
         <LineGraphStats />
@@ -53,7 +69,7 @@ const styles = StyleSheet.create({
   introText: {
     color: "#22222280",
     fontSize: 16,
-    textAlign: "justify",
+    // textAlign: "justify",
     lineHeight: 30,
     margin: 10
   }
